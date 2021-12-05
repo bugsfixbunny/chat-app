@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import styles from './styles/LoginScreenRenderStyles';
 import { Formik } from 'formik';
@@ -17,6 +17,12 @@ export default function LoginScreenRender({
 
     const [inputEmailIsFocused, setInputEmailIsFocused] = useState(false);
     const [inputPasswordIsFocused, setInputPasswordIsFocused] = useState(false);
+
+    useEffect(() => {
+        if(accountExists){
+            setInputEmailIsFocused(false);
+        }
+    }, [accountExists]);
 
     return (
         <LoginSkeleton title={accountExists ? 'Log in' : 'Hi!'}>

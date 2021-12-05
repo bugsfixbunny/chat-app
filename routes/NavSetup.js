@@ -4,6 +4,8 @@ import AuthRoutes from './AuthRoutes';
 import ChatRoutes from './ChatRoutes';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsLoading, selectLoggedIn, getUser } from '../redux/userSlice';
+import { clearFriends } from '../redux/friendsSlice';
+import { clearMessages } from '../redux/messagesSlice';
 import Loading from '../screens/utils/Loading';
 
 export default function NavSetup() {
@@ -15,6 +17,10 @@ export default function NavSetup() {
     useEffect(() => {
         if (isLoggedIn === 'idle') {
             dispatch(getUser());
+        }
+        if (isLoggedIn == false) {
+            dispatch(clearFriends());
+            dispatch(clearMessages());
         }
     }, [isLoggedIn, dispatch]);
 

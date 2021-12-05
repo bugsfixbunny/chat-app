@@ -77,6 +77,7 @@ export const removeFromStorage = async (keyOfValueToRemove) => {
 
 
 export const prettifyData = (dateTime) => {
+    dateTime = dateTime.replace(/"/g, '');
     const date = new Date(dateTime);
     let hours = date.getHours();
     let minutes = date.getMinutes();
@@ -85,14 +86,15 @@ export const prettifyData = (dateTime) => {
     let year = date.getFullYear();
     let time = compareTime(date);
     if (time === 1) {
-        minutes = minutes < 10 ? '0'+minutes : minutes
+        minutes = minutes < 10 ? '0'+minutes : minutes;
+        hours = hours < 10 ? '0'+hours : hours;
         return(hours+':'+minutes);
     } else if (time === 2) {
         return('yesterday');
     } else if (time === 3) {
-        month = month < 10 ? '0'+month : month
-        days = days < 10 ? '0'+days : days
-        return(days+'/'+month+'/'+year);
+        month = month < 10 ? '0'+month : month;
+        days = days < 10 ? '0'+days : days;
+        return(days+'/'+month+'/'+year)
     }
 }
 
@@ -114,4 +116,4 @@ const compareTime = (date) => {
 }
 
 
-export const ip = 'http://192.168.0.10:5000';
+export const ip = 'http://192.168.0.55:5000';
