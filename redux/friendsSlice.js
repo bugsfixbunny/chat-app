@@ -27,7 +27,15 @@ export const friendsSlice = createSlice({
             const friend = state.entities[ownerId];
             const messagesArray = friend.messages_id;
             messagesArray.push(messageId);
+        },
+        newMessageMine: (state, action) => {
+            const receiverId = action.payload.receiver_id;
+            const messageId = action.payload.id;
+            const friend = state.entities[receiverId];
+            const messagesArray = friend.messages_id;
+            messagesArray.push(messageId);
         }
+        
     },
     extraReducers(builder) {
         builder
@@ -40,7 +48,7 @@ export const friendsSlice = createSlice({
     }
 });
 
-export const { clearFriends, newMessage } = friendsSlice.actions;
+export const { clearFriends, newMessage, newMessageMine } = friendsSlice.actions;
 
 export const {
     selectAll: selectAllFriends,

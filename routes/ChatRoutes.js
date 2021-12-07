@@ -4,7 +4,7 @@ import ChatTabs from './ChatTabs';
 import ChatSingleFriendScreen from '../screens/chatScreens/ChatSingleFriendScreen';
 import ChatProfilePhoto from '../screens/chatScreens/ChatProfilePhoto';
 import { useDispatch } from 'react-redux';
-import { connectToSocket, socket } from '../redux/messagesSlice';
+import { connectToSocket, seenMessage, socket } from '../redux/messagesSlice';
 import { newMessageIncoming } from '../redux/messagesSlice';
 import { newMessage } from '../redux/friendsSlice';
 
@@ -26,11 +26,15 @@ export default function ChatRoutes() {
     const incomingEvents = async () => {
         socket.on('private message', async data => {
             const message = data.data;
+            console.log('message: ', message)
             dispatch(newMessageIncoming(message));
             dispatch(newMessage(message));
         });
         socket.on('disconnect', () => {
             socket.connect();
+        });
+        socket.on('seen message', async data => {
+            dispatch(seenMessage(data));
         });
     }
 

@@ -14,7 +14,6 @@ export default function MainScreenSingleFriend({ friend }) {
     const navigation = useNavigation();
     const friendId = friend.id;
 
-
     if(lastMessage === null) {
         let lastMessageId = friend.messages_id[friend.messages_id.length - 1];
         if (lastMessageId) {
@@ -38,7 +37,9 @@ export default function MainScreenSingleFriend({ friend }) {
                 </View>
                 <View style={styles.lastSeenContainer}>
                     <Text style={[styles.lastMessage, styles.lastMessageDate]}>{lastMessage ? prettifyData(lastMessage.date) : null}</Text>
-                    <Text style={styles.notSeenNumber}>{notSeenNumber}</Text>
+                    {notSeenNumber == 0 ? null :
+                        <Text style={styles.notSeenNumber}>{notSeenNumber}</Text>
+                    }
                 </View>
             </View>
         </TouchableOpacity>

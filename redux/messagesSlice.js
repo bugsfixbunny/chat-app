@@ -39,6 +39,9 @@ export const messagesSlice = createSlice({
         newSocketConnection: (state, action) => {
             const socket = action.payload;
             state.socket = socket;
+        },
+        seenMessage: (state, action) => {
+            messagesAdapter.updateMany(state, action.payload);
         }
     },
     extraReducers(builder) {
@@ -53,7 +56,7 @@ export const messagesSlice = createSlice({
     }
 });
 
-export const { clearMessages, newMessageIncoming, newSocketConnection } = messagesSlice.actions;
+export const { clearMessages, newMessageIncoming, newSocketConnection, seenMessage } = messagesSlice.actions;
 
 export const {
     selectAll: selectAllMessages,
@@ -63,6 +66,7 @@ export const {
 
 export const selectMessagesLoaded = state => state.messages.loading;
 export const selectSocket = state => state.messages.socket;
+
 export const selectMessagesByIds = (state, ids) => {
     let messages = [];
     for(let i = ids.length - 1; i >= 0; i--){
@@ -75,9 +79,15 @@ export const selectMessagesByIds = (state, ids) => {
 }
 
 export const selectNotSeenNumber = (state, ids) => {
-    messages = selectMessagesByIds(state, ids);
-    return messages.filter(message => !message.has_seen).length;
+    let count = 0;
+    const currentUserId = state.user.data.id;
+    for(let i = 0; i < ids.length; i++) {
+        const message = selectMessageById(state, ids[i]);
+        if (!(message?.has_seen) && !(message?.owner_id == currentUserId)) {
+            count++;
+        }
+    }
+    return count;
 } 
-
 
 export default messagesSlice.reducer;

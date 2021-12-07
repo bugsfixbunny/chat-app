@@ -38,10 +38,8 @@ export default StyleSheet.create({
     notSeenNumber: {
         fontFamily: 'ShipporiAntique-Regular',
         fontSize: 11,
-        width: '100%',
         color: 'white',
         textAlign: 'center',
-        alignSelf: 'center',
         backgroundColor: '#5d3fd3',
         padding: 5,
         borderRadius: 30

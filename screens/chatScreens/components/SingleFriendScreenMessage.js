@@ -5,7 +5,7 @@ import { selectUserProfilePic } from '../../../redux/userSlice';
 import { useSelector } from 'react-redux';
 import { ip } from '../../../utils/Utilyties';
 
-export default function SingleFriendScreenMessage({ content, isMine, date, friendProfilePic }) {
+export default function SingleFriendScreenMessageMemo({ content, isMine, date, friendProfilePic }) {
 
     const profilePic = useSelector(selectUserProfilePic);
 
@@ -29,3 +29,5 @@ export default function SingleFriendScreenMessage({ content, isMine, date, frien
         </View>
     );
 }
+
+export const SingleFriendScreenMessage = React.memo(SingleFriendScreenMessageMemo);
