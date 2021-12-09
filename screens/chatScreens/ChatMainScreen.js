@@ -3,20 +3,25 @@ import FocusAwareStatusBar from '../utils/FocusAwareStatusBar';
 import MainScreenHeader from './components/MainScreenHeader';
 import MainScreenSearchBar from './components/MainScreenSearchBar';
 import MainScreenFriendsList from './components/MainScreenFriendsList';
-import { useDispatch } from 'react-redux';
-import { getFriends } from '../../redux/friendsSlice';
-import { getMessages } from '../../redux/messagesSlice';
-import { getFetch, ip, postFetch } from '../../utils/Utilyties';
+import { useDispatch, useSelector } from 'react-redux';
+import { getFriends,selectFriendsLoaded } from '../../redux/friendsSlice';
+import { getMessages, selectMessagesLoaded } from '../../redux/messagesSlice';
 
 export default function ChatMainScreen(){
 
     const dispatch = useDispatch();
+    const messagesLoaded = useSelector(selectMessagesLoaded);
+    const friendsLoaded = useSelector(selectFriendsLoaded);
 
     useEffect(() => {
-        dispatch(getFriends());
-        dispatch(getMessages());
-        postFetch(`${ip}/users/add-friend`, {name: 'Luccas'})
-    }, []);
+        if(friendsLoaded === 'idle'){
+            dispatch(getFriends());
+        }
+        if(messagesLoaded === 'idle'){
+            dispatch(getMessages());
+            console.log('this runs')
+        }
+    }, [messagesLoaded, friendsLoaded]);
     
     return (
         <>

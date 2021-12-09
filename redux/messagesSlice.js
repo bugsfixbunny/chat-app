@@ -19,7 +19,7 @@ const messagesAdapter = createEntityAdapter();
 
 const initialState = messagesAdapter.getInitialState({
     error: null,
-    loading: 'idle',
+    loaded: 'idle',
     socket: {}
 });
 
@@ -48,10 +48,11 @@ export const messagesSlice = createSlice({
         builder
         .addCase(getMessages.fulfilled, (state, action) => {
             messagesAdapter.upsertMany(state, action.payload);
-            state.loading = 'loaded';
+            state.loaded = true;
         })
         .addCase(getMessages.rejected, (state, action) => {
             state.error = action.error.message;
+            state.loaded= false;
         })
     }
 });
@@ -64,7 +65,7 @@ export const {
     selectIds: selectMessagesIds
   } = messagesAdapter.getSelectors(state => state.messages);
 
-export const selectMessagesLoaded = state => state.messages.loading;
+export const selectMessagesLoaded = state => state.messages.loaded;
 export const selectSocket = state => state.messages.socket;
 
 export const selectMessagesByIds = (state, ids) => {

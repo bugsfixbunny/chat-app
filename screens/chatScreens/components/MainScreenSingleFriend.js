@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, View, Text, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
-import { selectMessageById, selectNotSeenNumber } from '../../../redux/messagesSlice';
+import { selectMessageById, selectNotSeenNumber, selectMessagesLoaded } from '../../../redux/messagesSlice';
 import { prettifyData } from '../../../utils/Utilyties';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../styles/MainScreenSingleFriendStyles';
@@ -9,18 +9,18 @@ import { ip } from '../../../utils/Utilyties';
 
 export default function MainScreenSingleFriend({ friend }) {
 
-    let lastMessage = null;
-    let notSeenNumber = null;
     const navigation = useNavigation();
     const friendId = friend.id;
+    const messagesLoaded = useSelector(selectMessagesLoaded);
+    let lastMessage = null;
+    let notSeenNumber = null;
 
-    if(lastMessage === null) {
-        let lastMessageId = friend.messages_id[friend.messages_id.length - 1];
-        if (lastMessageId) {
-            lastMessage = useSelector(state => selectMessageById(state, lastMessageId));
-            notSeenNumber = useSelector(state => selectNotSeenNumber(state, friend.messages_id));
-        }
+    const lastMessageId = friend.messages_id[friend.messages_id.length - 1];
+    if (lastMessageId && messagesLoaded) {
+        lastMessage = useSelector(state => selectMessageById(state, lastMessageId));
+        notSeenNumber = useSelector(state => selectNotSeenNumber(state, friend.messages_id));
     }
+    
 
     return (
         <TouchableOpacity onPress={() => navigation.navigate('ChatSingleFriendScreen', {friendId})}>
@@ -37,7 +37,7 @@ export default function MainScreenSingleFriend({ friend }) {
                 </View>
                 <View style={styles.lastSeenContainer}>
                     <Text style={[styles.lastMessage, styles.lastMessageDate]}>{lastMessage ? prettifyData(lastMessage.date) : null}</Text>
-                    {notSeenNumber == 0 ? null :
+                    {(notSeenNumber == 0 && notSeenNumber != null) ? null :
                         <Text style={styles.notSeenNumber}>{notSeenNumber}</Text>
                     }
                 </View>

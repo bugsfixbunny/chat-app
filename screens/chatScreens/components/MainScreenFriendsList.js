@@ -1,21 +1,33 @@
 import React, { useEffect } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, Text, FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
-import { selectAllFriends } from '../../../redux/friendsSlice';
+import { selectAllFriends, selectFriendsLoaded } from '../../../redux/friendsSlice';
 import MainScreenSingleFriend from './MainScreenSingleFriend';
 
 export default function MainScreenFriendsList() {
 
-    const friends = useSelector(state => selectAllFriends(state));
+    const friendsLoaded = useSelector(selectFriendsLoaded);
+    let friends = null;
+
+    if(friendsLoaded) {
+        friends = useSelector(state => selectAllFriends(state));
+    }
+
+    if(friends) return <FlatList 
+                            initialNumToRender={20}
+                            data={friends}
+                            extraData={friends}
+                            removeClippedSubview={true}
+                            renderItem={({item}) => 
+                                <MainScreenSingleFriend
+                                    key={item.id}
+                                    friend={item}
+                                />
+                            }
+                        />
+                    
 
     return (
-        <ScrollView>
-            {friends.map(friend => 
-            <MainScreenSingleFriend
-                key={friend.id}
-                friend={friend}
-            />
-            )}
-        </ScrollView>
+        <Text>You have no friends?</Text>
     );
 }

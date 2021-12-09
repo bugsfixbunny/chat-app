@@ -3,7 +3,6 @@ import { selectValidToken } from '../redux/userSlice';
 import { newMessageIncoming, socket } from '../redux/messagesSlice';
 import { newMessageMine } from '../redux/friendsSlice';
 
-
 export default function useSocketsHandler() {
 
     const userToken = useSelector(selectValidToken);

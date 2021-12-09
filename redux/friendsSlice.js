@@ -9,7 +9,7 @@ export const getFriends = createAsyncThunk('friends/getFriends', async () => {
 const friendsAdapter = createEntityAdapter();
 
 const initialState = friendsAdapter.getInitialState({
-    loading: 'idle',
+    loaded: 'idle',
     error:  null
 });
 
@@ -41,14 +41,18 @@ export const friendsSlice = createSlice({
         builder
         .addCase(getFriends.fulfilled, (state, action) => {
             friendsAdapter.upsertMany(state, action.payload);
+            state.loaded = true;
         })
         .addCase(getFriends.rejected, (state, action) => {
             state.error = action.error.message;
+            state.loaded = false;
         })
     }
 });
 
 export const { clearFriends, newMessage, newMessageMine } = friendsSlice.actions;
+
+export const selectFriendsLoaded = state => state.messages.loaded;
 
 export const {
     selectAll: selectAllFriends,

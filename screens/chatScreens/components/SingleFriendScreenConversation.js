@@ -42,6 +42,7 @@ export default function SingleFriendScreenConversation({ friend }){
         <FlatList 
             style={[styles.container, {scaleY: -1}]}
             data={messages}
+            extraData={messages}
             removeClippedSubview={true}
             initialNumToRender={20}
             renderItem={({ item }) => 
