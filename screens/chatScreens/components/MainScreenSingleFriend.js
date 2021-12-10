@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import styles from '../styles/MainScreenSingleFriendStyles';
 import { ip } from '../../../utils/Utilyties';
 
-export default function MainScreenSingleFriend({ friend }) {
+export default React.memo(function MainScreenSingleFriendMemo({ friend }) {
 
     const navigation = useNavigation();
     const friendId = friend.id;
@@ -44,4 +44,4 @@ export default function MainScreenSingleFriend({ friend }) {
             </View>
         </TouchableOpacity>
     );
-}
+});

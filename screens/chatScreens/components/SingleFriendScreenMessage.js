@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, Image } from 'react-native';
 import styles from '../styles/SingleFriendScreenMessageStyles';
 import { selectUserProfilePic } from '../../../redux/userSlice';
 import { useSelector } from 'react-redux';
 import { ip } from '../../../utils/Utilyties';
 
-export default function SingleFriendScreenMessageMemo({ content, isMine, date, friendProfilePic }) {
+export default React.memo(function SingleFriendScreenMessage({ content, isMine, date, friendProfilePic, id }) {
 
     const profilePic = useSelector(selectUserProfilePic);
+
+    useEffect(() => {
+        console.log('message rerendered: ', id);
+    });
 
     return (
         <View style={[styles.container, {scaleY: -1}, isMine ? styles.containerMine : {}]}>
@@ -28,6 +32,4 @@ export default function SingleFriendScreenMessageMemo({ content, isMine, date, f
             </View>
         </View>
     );
-}
-
-export const SingleFriendScreenMessage = React.memo(SingleFriendScreenMessageMemo);
+});

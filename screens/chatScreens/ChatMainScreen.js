@@ -19,7 +19,6 @@ export default function ChatMainScreen(){
         }
         if(messagesLoaded === 'idle'){
             dispatch(getMessages());
-            console.log('this runs')
         }
     }, [messagesLoaded, friendsLoaded]);
     

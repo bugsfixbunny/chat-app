@@ -5,10 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import { Dimensions } from 'react-native';
 import ProfilePhotoCamera from './components/ProfilePhotoCamera';
 import ProfilePhotoUpload from './components/ProfilePhotoUpload';
-import { postFetch, ip } from '../../utils/Utilyties';
 import { useDispatch } from 'react-redux';
 import { updateProfilePhoto } from '../../redux/userSlice';
-
 
 const dimensions = Dimensions.get("window");
 const screenWidth = dimensions.width;
@@ -65,8 +63,8 @@ export default function ChatProfilePhoto() {
     const toggleFlash = () => {
         setFlasMode(
             flashMode === Camera.Constants.FlashMode.off
-             ? Camera.Constants.FlashMode.on
-             : Camera.Constants.FlashMode.off
+              ? Camera.Constants.FlashMode.on
+              : Camera.Constants.FlashMode.off
         );
     }
 

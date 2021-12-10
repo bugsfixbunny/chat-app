@@ -5,10 +5,10 @@ import { prettifyData } from '../../../utils/Utilyties';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectMessagesByIds, seenMessage } from '../../../redux/messagesSlice';
 import { selectUserId, selectValidToken } from '../../../redux/userSlice';
-import { SingleFriendScreenMessage } from './SingleFriendScreenMessage';
+import SingleFriendScreenMessage from './SingleFriendScreenMessage';
 import useSocketsHandler from '../../../sockets/useSocketsHandler';
 
-export default function SingleFriendScreenConversation({ friend }){
+export default React.memo(function SingleFriendScreenConversation({ friend }){
 
     const currentUserId = useSelector(selectUserId);
     const token = useSelector(selectValidToken);
@@ -43,11 +43,11 @@ export default function SingleFriendScreenConversation({ friend }){
             style={[styles.container, {scaleY: -1}]}
             data={messages}
             extraData={messages}
-            removeClippedSubview={true}
             initialNumToRender={20}
             renderItem={({ item }) => 
             <SingleFriendScreenMessage
                 key={item.id}
+                id={item.id}
                 content={item.content}
                 isMine={isMine(item.owner_id)}
                 date={prettifyData(item.date)}
@@ -55,4 +55,4 @@ export default function SingleFriendScreenConversation({ friend }){
             />}
         />
     );
-}
+});
