@@ -2,6 +2,9 @@ node_modules/
 .expo/
 dist/
 npm-debug.*
+__pychache__/
+chat_backend/__pychache__/
+*.pyc
 *.jks
 *.p8
 *.p12
