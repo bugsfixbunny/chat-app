@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { ScrollView, Text, FlatList } from 'react-native';
+import { Text, FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
 import { selectAllFriends, selectFriendsLoaded } from '../../../redux/friendsSlice';
 import MainScreenSingleFriend from './MainScreenSingleFriend';
