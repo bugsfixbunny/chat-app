@@ -1,3 +1,4 @@
+import React from 'react';
 import { Text, FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
 import { selectAllFriends, selectFriendsLoaded } from '../../../redux/friendsSlice';

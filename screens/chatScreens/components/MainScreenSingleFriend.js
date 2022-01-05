@@ -16,11 +16,8 @@ export default React.memo(function MainScreenSingleFriendMemo({ friend }) {
     let notSeenNumber = null;
 
     const lastMessageId = friend.messages_id[friend.messages_id.length - 1];
-    if (lastMessageId && messagesLoaded) {
-        lastMessage = useSelector(state => selectMessageById(state, lastMessageId));
-        notSeenNumber = useSelector(state => selectNotSeenNumber(state, friend.messages_id));
-    }
-    
+    lastMessage = useSelector(state => selectMessageById(state, lastMessageId));
+    notSeenNumber = useSelector(state => selectNotSeenNumber(state, friend.messages_id));
 
     return (
         <TouchableOpacity onPress={() => navigation.navigate('ChatSingleFriendScreen', {friendId})}>
@@ -37,7 +34,7 @@ export default React.memo(function MainScreenSingleFriendMemo({ friend }) {
                 </View>
                 <View style={styles.lastSeenContainer}>
                     <Text style={[styles.lastMessage, styles.lastMessageDate]}>{lastMessage ? prettifyData(lastMessage.date) : null}</Text>
-                    {(notSeenNumber == 0 && notSeenNumber != null) ? null :
+                    {(notSeenNumber === 0 | notSeenNumber === null) ? null :
                         <Text style={styles.notSeenNumber}>{notSeenNumber}</Text>
                     }
                 </View>

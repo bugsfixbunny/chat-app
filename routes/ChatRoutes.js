@@ -16,9 +16,7 @@ export default function ChatRoutes() {
 
     useEffect(() => {
         (async () => {
-            if(!socket){
-               await dispatch(connectToSocket());
-            }
+            await dispatch(connectToSocket());
             await incomingEvents();
         })();
     }, []);
